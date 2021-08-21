@@ -1,0 +1,60 @@
+{
+  "data": [
+    {
+      "id": 151786,
+      "title": "Understanding Color Theory: The Color Wheel And Finding Stuff",
+      "date": "12-sept-2020",
+      "imageUrl": "./assets/images/Rectangle 6.20avocado.png",
+      "ticketAvailable": 0
+    },
+    {
+      "id": 96039,
+      "title": "RDG Design Thinkers",
+      "date": "12-sept-2020",
+      "imageUrl": "./assets/images/Rectangle 6.20bellpepper.png",
+      "ticketAvailable": 11
+    },
+    {
+      "id":102545,
+      "title": "What Design Can Do",
+      "date": "12-sept-2020",
+      "imageUrl": "./assets/images/Rectangle 6.20casava2.png",
+      "ticketAvailable": 206
+    },
+    {
+      "id": 172737,
+      "title": "Perth UX Camp",
+      "date": "12-sept-2020",
+      "imageUrl": "./assets/images/Rectangle 6.20cassava.png",
+      "ticketAvailable": 47
+    },
+    {
+      "id": 121804,
+      "title": "Sofia Design",
+      "date": "12-sept-2020",
+      "imageUrl": "./assets/images/Rectangle 6.20nuts.png",
+      "ticketAvailable": 66
+    },
+    {
+      "id": 118558,
+      "title": "Design Indaba Conference",
+      "date": "12-sept-2020",
+      "imageUrl": "./assets/images/Rectangle 6.20oliveoil.png",
+      "ticketAvailable": 84
+    },
+    {
+      "id": 113021,
+      "title": "TYPO Berlin",
+      "date": "12-sept-2020",
+      "imageUrl": "./assets/images/Rectangle 6.20onions.png",
+      "ticketAvailable": 4
+    },
+    {
+      "id": 27810,
+      "title": "AIGA Design Conference",
+      "date": "12-sept-2020",
+      "imageUrl": "./assets/images/Rectangle 6.20potato.png",
+      "ticketAvailable": 16
+    }
+  ]
+}
