@@ -13,7 +13,7 @@
 
           <div class="card-container-details-info--ticket">
             Tickets Available:
-            <span v-if="event.ticketAvailable" class="card-container-details--ticket-value">{{ ticketFilters(event.ticketAvailable, 'digit') }}</span>
+            <span v-if="event.ticketAvailable" class="card-container-details-info--ticket-value">{{ ticketFilters(event.ticketAvailable, 'digit') }}</span>
             <span v-else>N/A</span>
           </div>
         </Flex>
@@ -24,6 +24,7 @@
           <span class="card-button--text">{{ticketFilters(event.ticketAvailable, 'button')}}</span>
         </Flex>
       </Button>
+      <IconCalendar class="card-button--icon--mobile" :iconColor="ticketFilters(event.ticketAvailable, 'icon')"/>
     </div>
   </Flex>
 </template>
@@ -78,14 +79,22 @@ export default {
 <style lang="scss" scoped>
   .card {
     margin: .3rem;
+      // &-grand-container {
+        @media only screen and (max-width: 48em) {
+          flex-direction: row;
+        }
+      // }
     &-container{
       width: 100%;
       position: relative;
       // padding-bottom: 1rem;
+        @media only screen and (max-width: 48em) {
+          width: auto;
+        }
       &--image{
         width: 100%;
-          @media only screen and (max-width: 48em) {
-            // display: none;
+          @media only screen and (max-width: 40em) {
+            display: none;
           }
           @media only screen and (max-width: 26.5625em) {
             display: none;
@@ -106,11 +115,16 @@ export default {
         padding: 0 1rem/* 16px */;
         border: 1px solid rgba(0, 0, 0, 0.1);
         margin-top: -5px;
-        --bg-opacity: 1;
         box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+          @media only screen and (max-width: 48em) {
+            display: flex;
+            align-items: center;
+          }
       }
       &-details-inner{
-        background-color: rgba(255, 255, 255, var(--bg-opacity));
+        // background-color: rgba(255, 255, 255, var(--bg-opacity));
+        margin-bottom: .9rem;
         // padding: 1rem/* 24px */;
         border-radius: 0.5rem/* 8px */;
       }
@@ -129,7 +143,7 @@ export default {
           hyphens: auto;
         }
         &-info{
-            @media only screen and (max-width: 26.5625em) {
+            @media only screen and (max-width: 48em) {
               flex-direction: column;
             }
           &--date{
@@ -140,7 +154,6 @@ export default {
             font-size: .8rem/* 18px */;
           }
           &--ticket{
-            color: rgba(75, 85, 99, var(--text-opacity));
             font-weight: 600;
             letter-spacing: 0.025em;
             font-size: .8rem/* 18px */;
@@ -153,11 +166,19 @@ export default {
     }
     &-button{
       border: 1px solid #f77d24;
-      margin: .9rem 0 .9rem;
+      margin: 0 0 .9rem;
       width: 100%;
       color: #f77d24;
+        @media only screen and (max-width: 48em) and (min-width: 0em) {
+          display: none;
+        }
       &--icon{
-        
+        &--mobile {
+          display: none;
+            @media only screen and (max-width: 48em) and  (min-width: 0em){
+              display: block;
+            }
+        }
       }
       &--text{
 
