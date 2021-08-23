@@ -1,12 +1,10 @@
 <template>
   <div class="listing-container">
     <Flex>
-      <h3>EVENTS (8)</h3>
+      <h1>EVENTS (8)</h1>
     </Flex>
-    <Flex flexDirection="row" flexWrap="wrap" justifyContent="space-between">
-      <div class="card" v-for="event in listings" :key="event.id">
-        <Card :event="event"/>
-      </div>
+    <Flex flexDirection="row" flexWrap="wrap" justifyContent="center">
+      <Card v-for="event in listings" :key="event.id" :event="event"/>
     </Flex>
   </div>
 </template>
@@ -33,12 +31,6 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
   .listing-container {
-    padding: 20px 25px;
-  }
-  .card{
-    margin: 0 0 1rem;
-    // width: 33%;
-    max-width: 295px;
-    width: 295px;
+    padding: 20px 20px;
   }
 </style>

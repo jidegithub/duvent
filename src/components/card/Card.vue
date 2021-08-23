@@ -1,26 +1,27 @@
 <template>
-  <Flex flexDirection="column">
+  <Flex class="card" flexDirection="column">
     <div class="card-container">
       <img class="card-container--image" :src="event.imageUrl" :alt="event.imageAlt">
     </div>
     <div class="card-container-details-outer">
       <div class="card-container-details-inner">
         <h5 class="card-container-details--title">{{ event.title }}</h5>
-        <Flex justifyContent="space-between" class="">
-          <div class="card-container-details--date">
+        <Flex justifyContent="space-between" class="card-container-details-info">
+          <div class="card-container-details-info--date">
             {{ event.date }}
           </div>
 
-          <div class="card-container-details--ticket">
+          <div class="card-container-details-info--ticket">
             Tickets Available:
-            <span class="">{{ event.ticketAvailable }}</span>
+            <span v-if="event.ticketAvailable" class="card-container-details--ticket-value">{{ ticketFilters(event.ticketAvailable, 'digit') }}</span>
+            <span v-else>N/A</span>
           </div>
         </Flex>
       </div>
-      <Button class="card-button" :name="ticketAvailable(event.ticketAvailable)">
+      <Button class="card-button" :disabled="ticketFilters(event.ticketAvailable, 'button') === 'SOLD OUT'" :name="ticketFilters(event.ticketAvailable, 'button')">
         <Flex justifyContent="center" alignItems="end">
-          <IconCalendar />
-          <span>{{ticketAvailable(event.ticketAvailable)}}</span>
+          <IconCalendar class="card-button--icon" :iconColor="ticketFilters(event.ticketAvailable, 'icon')"/>
+          <span class="card-button--text">{{ticketFilters(event.ticketAvailable, 'button')}}</span>
         </Flex>
       </Button>
     </div>
@@ -53,8 +54,22 @@ export default {
     IconCalendar,
   },
   methods: {
-    ticketAvailable(value:number): string {
-      return value === 0 ? 'SOLD OUT' : 'Book Event';
+    ticketFilters(value:number, type:string):string {
+      let property = '';
+      switch (type) {
+        case 'button':
+          property = value === 0 ? 'SOLD OUT' : 'Book Event';
+          break;
+        case 'icon':
+          property = value === 0 ? '#707475' : '#f77d24';
+          break;
+        case 'digit':
+          property = value === 0 ? 'N/A' : value.toString();
+          break;
+        default:
+          break;
+      }
+      return property;
     },
   },
 };
@@ -62,12 +77,19 @@ export default {
 
 <style lang="scss" scoped>
   .card {
+    margin: .3rem;
     &-container{
       width: 100%;
       position: relative;
       // padding-bottom: 1rem;
       &--image{
         width: 100%;
+          @media only screen and (max-width: 48em) {
+            // display: none;
+          }
+          @media only screen and (max-width: 26.5625em) {
+            display: none;
+          }
         & img{
           position: absolute;
           height: 100%;
@@ -106,27 +128,46 @@ export default {
           line-height: 1.25;
           hyphens: auto;
         }
-        &--date{
-          --text-opacity: 1;
-          color: rgba(75, 85, 99, var(--text-opacity));
-          font-weight: 600;
-          letter-spacing: 0.025em;
-          font-size: .8rem/* 18px */;
-        }
-        &--ticket{
-          color: rgba(75, 85, 99, var(--text-opacity));
-          font-weight: 600;
-          letter-spacing: 0.025em;
-          font-size: .8rem/* 18px */;
+        &-info{
+            @media only screen and (max-width: 26.5625em) {
+              flex-direction: column;
+            }
+          &--date{
+            --text-opacity: 1;
+            color: rgba(75, 85, 99, var(--text-opacity));
+            font-weight: 600;
+            letter-spacing: 0.025em;
+            font-size: .8rem/* 18px */;
+          }
+          &--ticket{
+            color: rgba(75, 85, 99, var(--text-opacity));
+            font-weight: 600;
+            letter-spacing: 0.025em;
+            font-size: .8rem/* 18px */;
+            &-value {
+              color: #f77d24;
+            }
+          }
         }
       }
     }
     &-button{
+      border: 1px solid #f77d24;
       margin: .9rem 0 .9rem;
       width: 100%;
       color: #f77d24;
+      &--icon{
+        
+      }
+      &--text{
+
+      }
       & span{
         margin-left: .3rem;
+      }
+      &:disabled{
+        color: #707475;
+        border: 1px solid #707475;
       }
     }
   }

@@ -1,7 +1,7 @@
 <template>
-  <svg :width="width" :height="height" fill="#f77d24" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve">
+  <svg :width="width" :height="height" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve">
   <title :id="iconName" lang="en">{{ iconName }} icon</title>
-    <g>
+    <g :fill="iconColor">
       <path d="M410.7,87.2h-42.2V41.5c0-5.8-4.7-10.5-10.5-10.5h-35.2c-5.8,0-10.5,4.7-10.5,10.5v45.7H199.8V41.5
         c0-5.8-4.7-10.5-10.5-10.5H154c-5.8,0-10.5,4.7-10.5,10.5v45.7h-42.2c-23.3,0-42.2,18.9-42.2,42.2v309.4
         c0,23.3,18.9,42.2,42.2,42.2h309.4c23.3,0,42.2-18.9,42.2-42.2V129.4C452.9,106.1,434,87.2,410.7,87.2z M405.4,438.8H106.6
@@ -19,6 +19,10 @@ export default {
     iconName: {
       type: String,
       default: 'calendar',
+    },
+    iconColor: {
+      type: String,
+      default: '#f77d24',
     },
     width: {
       type: [Number, String],
