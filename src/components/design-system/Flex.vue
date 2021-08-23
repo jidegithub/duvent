@@ -1,36 +1,63 @@
 <template>
-  <div class="container-main">
+  <div class="container-main" :style="cssVars">
     <slot/>
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue';
+
+// interface FlexBoxInterface {
+//   justifyContent: string
+//   alignItems: string
+//   flexDirection: string
+//   flexGrow: number
+// }
+
+type FlexBoxType = {
+  '--justify-content': string
+  '--align-items': string
+  '--flex-direction': string
+  '--flex-grow': number
+  '--flex-wrap': string
+}
+export default Vue.extend({
   name: 'Flex',
-};
+  props: {
+    justifyContent: String,
+    alignItems: String,
+    flexDirection: {
+      type: String,
+      default: 'row',
+    },
+    flexGrow: {
+      type: Number,
+      default: 0,
+    },
+    flexWrap: String,
+  },
+  computed: {
+    cssVars(): FlexBoxType {
+      return {
+        '--flex-direction': this.flexDirection,
+        '--align-items': this.alignItems,
+        '--justify-content': this.justifyContent,
+        '--flex-grow': this.flexGrow,
+        '--flex-wrap': this.flexWrap,
+      };
+    },
+  },
+});
 </script>
 
 <style lang="scss">
   .container-main {
     display: flex;
-    align-items: center;
+    flex-direction: var(--flex-direction);
+    align-items: var(--align-items);
+    justify-content: var(--justify-content);
+    flex-grow: var(--flex-grow);
+    flex-wrap: var(--flex-wrap);
     letter-spacing: -0.03em;
-      @media only screen and (max-width: 56.25em) {
-        // display: none
-      }
-      // @media only screen and (max-width: 37.5em) {
-      //   font-size: 3.5rem;
-      // }
-    // span {
-    //   margin-right: 1rem;
-    //   background-image: linear-gradient(to right, #b0f3f1, #ffcfdf);
-    //   background-clip: text;
-    //   -webkit-background-clip: text;
-    //   -webkit-text-fill-color: transparent;
-    //   display: inline-block;
-    // }
-    // &__sub {
-    //   span {}
-    // }
   }
 </style>

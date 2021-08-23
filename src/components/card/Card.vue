@@ -1,30 +1,36 @@
 <template>
-  <Flex>
-    <div class="relative pb-5/6">
-      <img class="absolute h-full w-full object-cover rounded-lg shadow-md" :src="event.imageUrl" :alt="event.imageAlt">
+  <Flex flexDirection="column">
+    <div class="card-container">
+      <img class="card-container--image" :src="event.imageUrl" :alt="event.imageAlt">
     </div>
-    <div class="relative px-4 -mt-16">
-      <div class="bg-white p-6 rounded-lg shadow-lg">
-        <div class="flex items-baseline">
-          <span class="inline-block bg-teal-200 text-teal-800 text-xs px-2 rounded-full uppercase font-semibold tracking-wide">New</span>
-          <div class="ml-2 text-gray-600 text-xs uppercase font-semibold tracking-wide">
-            {{ event.beds }} beds &bull; {{ event.baths }} baths
+    <div class="card-container-details-outer">
+      <div class="card-container-details-inner">
+        <h5 class="card-container-details--title">{{ event.title }}</h5>
+        <Flex justifyContent="space-between" class="">
+          <div class="card-container-details--date">
+            {{ event.date }}
           </div>
-        </div>
-        <h4 class="mt-1 font-semibold text-lg leading-tight truncate">{{ event.title }}</h4>
-        <div class="mt-1">
-          {{ event.formattedPrice }}
-          <span class="text-gray-600 text-sm"> / wk</span>
-        </div>
+
+          <div class="card-container-details--ticket">
+            Tickets Available:
+            <span class="">{{ event.ticketAvailable }}</span>
+          </div>
+        </Flex>
       </div>
+      <Button class="card-button" :name="ticketAvailable(event.ticketAvailable)">
+        <Flex justifyContent="center" alignItems="end">
+          <IconCalendar />
+          <span>{{ticketAvailable(event.ticketAvailable)}}</span>
+        </Flex>
+      </Button>
     </div>
-    <Button :name="ticketAvailable(event.ticketAvailable)"/>
   </Flex>
 </template>
 
 <script lang="ts">
 import Flex from '@/components/design-system/Flex.vue';
 import Button from '@/components/design-system/Button.vue';
+import IconCalendar from '@/components/icons/IconCalendar.vue';
 
 interface EventInterface {
   id: number
@@ -44,6 +50,7 @@ export default {
   components: {
     Flex,
     Button,
+    IconCalendar,
   },
   methods: {
     ticketAvailable(value:number): string {
@@ -53,28 +60,74 @@ export default {
 };
 </script>
 
-<style lang="scss">
-  .card-container {
-
-    &-image{
-
+<style lang="scss" scoped>
+  .card {
+    &-container{
+      width: 100%;
+      position: relative;
+      // padding-bottom: 1rem;
+      &--image{
+        width: 100%;
+        & img{
+          position: absolute;
+          height: 100%;
+          width: 100%;
+          object-fit: cover;
+          border-radius: 0.5rem/* 8px */;
+          box-shadow:  0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+      }
     }
-    &-details{
-      &--title{
-        width: 250px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+    &-container {
+      &-details-outer{
+        position: relative;
+        padding: 0 1rem/* 16px */;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        margin-top: -5px;
+        --bg-opacity: 1;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
       }
-      &--date{
-
+      &-details-inner{
+        background-color: rgba(255, 255, 255, var(--bg-opacity));
+        // padding: 1rem/* 24px */;
+        border-radius: 0.5rem/* 8px */;
       }
-      &--ticket{
-
+      &-details{
+        &--title{
+          width: 260px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          overflow-wrap: break-word;
+          word-wrap: break-word;
+          // margin-top: 0.25rem/* 4px */;
+          font-weight: 600;
+          font-size: 1rem/* 18px */;
+          line-height: 1.25;
+          hyphens: auto;
+        }
+        &--date{
+          --text-opacity: 1;
+          color: rgba(75, 85, 99, var(--text-opacity));
+          font-weight: 600;
+          letter-spacing: 0.025em;
+          font-size: .8rem/* 18px */;
+        }
+        &--ticket{
+          color: rgba(75, 85, 99, var(--text-opacity));
+          font-weight: 600;
+          letter-spacing: 0.025em;
+          font-size: .8rem/* 18px */;
+        }
       }
     }
     &-button{
-
+      margin: .9rem 0 .9rem;
+      width: 100%;
+      color: #f77d24;
+      & span{
+        margin-left: .3rem;
+      }
     }
   }
 </style>
