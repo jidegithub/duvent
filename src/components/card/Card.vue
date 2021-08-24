@@ -18,13 +18,15 @@
           </div>
         </Flex>
       </div>
-      <Button class="card-button" :disabled="ticketFilters(event.ticketAvailable, 'button') === 'SOLD OUT'" :name="ticketFilters(event.ticketAvailable, 'button')">
-        <Flex justifyContent="center" alignItems="end">
-          <IconCalendar class="card-button--icon" :iconColor="ticketFilters(event.ticketAvailable, 'icon')"/>
-          <span class="card-button--text">{{ticketFilters(event.ticketAvailable, 'button')}}</span>
-        </Flex>
-      </Button>
-      <IconCalendar class="card-button--icon--mobile" :iconColor="ticketFilters(event.ticketAvailable, 'icon')"/>
+      <router-link :to='`/booking/${event.id}`' :event="ticketFilters(event.ticketAvailable, 'button') === 'SOLD OUT' ? '' : 'click'">
+        <Button class="card-button" :disabled="ticketFilters(event.ticketAvailable, 'button') === 'SOLD OUT'" :name="ticketFilters(event.ticketAvailable, 'button')">
+          <Flex justifyContent="center" alignItems="end">
+            <IconCalendar class="card-button--icon" :iconColor="ticketFilters(event.ticketAvailable, 'icon')"/>
+            <span class="card-button--text">{{ticketFilters(event.ticketAvailable, 'button')}}</span>
+          </Flex>
+        </Button>
+        <IconCalendar class="card-button--icon--mobile" :iconColor="ticketFilters(event.ticketAvailable, 'icon')"/>
+      </router-link>
     </div>
   </Flex>
 </template>
@@ -169,6 +171,7 @@ export default {
       margin: 0 0 .9rem;
       width: 100%;
       color: #f77d24;
+      cursor: pointer;
         @media only screen and (max-width: 48em) and (min-width: 0em) {
           display: none;
         }
@@ -189,6 +192,7 @@ export default {
       &:disabled{
         color: #707475;
         border: 1px solid #707475;
+        cursor: not-allowed;
       }
     }
   }

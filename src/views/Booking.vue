@@ -1,5 +1,18 @@
 <template>
-  <div class="about">
-    <h1>This is a booking page</h1>
-  </div>
+  <BookingForm/>
 </template>
+
+<script>
+import BookingForm from '@/components/booking_form/BookingForm.vue';
+
+export default {
+  name: 'booking',
+  components: {
+    BookingForm,
+  },
+};
+</script>
+
+<style lang="scss">
+
+</style>

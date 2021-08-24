@@ -57,7 +57,7 @@ export default {
     &-button{
       position: absolute;
       // right: 0;
-      right: 4px;
+      right: 7px;
       display: flex;
       align-items: center;
       justify-content: center;

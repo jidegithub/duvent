@@ -1,14 +1,17 @@
 <template>
-  <div class="listing-container">
-    <Flex>
-      <h1>EVENTS ({{filteredEventsCount}})</h1>
-    </Flex>
-    <Flex flexDirection="row" flexWrap="wrap" justifyContent="center">
-      <Card v-for="event in filteredEvents" :key="event.id" :event="event"/>
-    </Flex>
-    <!-- <Flex v-else justifyContent="center">
-      <h2>No Result Found!</h2>
-    </Flex> -->
+  <div>
+    <SearchBar/>
+    <div class="listing-container">
+      <Flex>
+        <h1>EVENTS ({{filteredEventsCount}})</h1>
+      </Flex>
+      <Flex flexDirection="row" flexWrap="wrap" justifyContent="center">
+        <Card v-for="event in filteredEvents" :key="event.id" :event="event"/>
+      </Flex>
+      <!-- <Flex v-else justifyContent="center">
+        <h2>No Result Found!</h2>
+      </Flex> -->
+    </div>
   </div>
 </template>
 
@@ -16,12 +19,14 @@
 import Vue from 'vue';
 import Flex from '@/components/design-system/Flex.vue';
 import Card from '@/components/card/Card.vue';
+import SearchBar from '@/components/searchbar/SearchBar.vue';
 
 export default Vue.extend({
   name: 'Home',
   components: {
     Card,
     Flex,
+    SearchBar,
   },
   computed: {
     filteredEvents() {
@@ -49,5 +54,6 @@ export default Vue.extend({
 <style lang="scss" scoped>
   .listing-container {
     padding: 20px 20px;
+    margin: 20px;
   }
 </style>
