@@ -1,7 +1,7 @@
 <template>
   <flex justifyContent="flex-start" alignItems="center" class="searchbar-outer">
     <flex class="searchbar-inner">
-      <input type="text" class="searchbar-input" placeholder="Search By Event Title...">
+      <input v-model="searchEvent" type="text" class="searchbar-input" placeholder="Search By Event Title...">
       <button class="searchbar-button">
         <svg class="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"/></svg>
       </button>
@@ -16,6 +16,16 @@ export default {
   name: 'searchbar',
   components: {
     Flex,
+  },
+  computed: {
+    searchEvent: {
+      get() {
+        return this.$store.state.searchEvent;
+      },
+      set(value) {
+        this.$store.dispatch('FILTERED_EVENTS', value);
+      },
+    },
   },
 };
 </script>
