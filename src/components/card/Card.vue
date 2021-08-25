@@ -89,7 +89,6 @@ export default {
     &-container{
       width: 100%;
       position: relative;
-      // padding-bottom: 1rem;
         @media only screen and (max-width: 48em) {
           width: auto;
         }

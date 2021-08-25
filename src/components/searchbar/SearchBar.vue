@@ -54,12 +54,11 @@ export default {
         }
     }
     &-input{
-      padding: 0.5rem 1rem/* 8px */;
+      padding: 0.5rem 1rem;
       width: 100%;
     }
     &-button{
       position: absolute;
-      // right: 0;
       right: 7px;
       display: flex;
       align-items: center;

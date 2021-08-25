@@ -5,12 +5,12 @@
       <h1>EVENTS ({{filteredEventsCount}})</h1>
     </Flex>
     <div class="listing-container">
-      <Flex flexDirection="row" flexWrap="wrap" justifyContent="center">
+      <Flex v-if="noResult" flexDirection="row" flexWrap="wrap" justifyContent="center">
         <Card v-for="event in filteredEvents" :key="event.id" :event="event"/>
       </Flex>
-      <!-- <Flex v-else justifyContent="center">
+      <Flex v-else justifyContent="center">
         <h2>No Result Found!</h2>
-      </Flex> -->
+      </Flex>
     </div>
   </div>
 </template>
@@ -38,15 +38,17 @@ export default Vue.extend({
       }
     },
     filteredEventsCount() {
-      return (this.$store.getters.getFilteredEventCount || this.$store.getters.getEventCount);
-      // if (this.$store.getters.getFilteredEventCount && this.$store.getters.getEventCount) {
-      //   return (this.$store.getters.getFilteredEventCount || this.$store.getters.getEventCount);
-      // }
-      // return 0;
+      if (this.filteredEvents.length) {
+        return (this.$store.getters.getFilteredEventCount || this.$store.getters.getEventCount);
+      }
+      return 0;
     },
-    // noResult() {
-
-    // }
+    noResult() {
+      if (this.filteredEvents.length) {
+        return true;
+      }
+      return false;
+    },
   },
 });
 </script>

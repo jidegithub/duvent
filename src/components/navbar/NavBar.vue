@@ -46,21 +46,21 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0.75rem 1rem/* 16px */;
+        padding: 0.75rem 3.8rem;
       };
     }
     &-inner{
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1rem 0.75rem/* 16px */;
+      padding: 1rem 0.75rem;
         @media (min-width: 640px) {
           padding: 0px;
         }
     }
     &--image{
       & img{
-        height: 2rem/* 32px */;
+        height: 2rem;
       }
     }
     &--button{
@@ -82,8 +82,8 @@ export default {
           outline-offset: 2px;
         }
         & svg{
-          height: 1.5rem/* 24px */;
-          width: 1.5rem/* 24px */;
+          height: 1.5rem;
+          width: 1.5rem;
           fill: currentColor;
         }
       }
@@ -91,27 +91,27 @@ export default {
   }
   .navigation{
     &-nav{
-      padding: 0.5rem 0.5rem 1rem 0.5rem/* 8px */;
+      padding: 0.5rem 0.5rem 1rem 0.5rem;
       @media (min-width: 640px) {
         display: flex;
         padding: 0px;
       }
         &-item{
           display: block;
-          padding: 0.8rem 0.5rem/* 4px */;
+          padding: 0.8rem 0.5rem;
           color: rgba(255, 255, 255, 1);
           font-weight: 600;
           font-size: .9rem;
           text-decoration: none;
-          border-radius: 0.25rem/* 4px */;
-          margin-top: 0.25rem/* 4px */;
+          border-radius: 0.25rem;
+          margin-top: 0.25rem;
           &:first-child{
             margin-top: 0;
           }
           &:not(:first-child){
             @media (min-width: 640px) {
               margin-top: 0px;
-              margin-left: 0.5rem/* 8px */;
+              margin-left: 0.5rem;
             }
           }
           &:hover{

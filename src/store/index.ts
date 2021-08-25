@@ -18,10 +18,12 @@ export default new Vuex.Store({
         state.filteredEvents = null;
       } else {
         state.searchEvent = word;
-        const found = state.listings
+        state.filteredEvents = state.listings
           .filter((event) => event.title.toLowerCase().includes(word));
-        state.filteredEvents = [state.filteredEvents, ...found];
       }
+      // const found = state.listings
+      //     .filter((event) => event.title.toLowerCase().includes(word));
+      //   state.filteredEvents = [state.filteredEvents, ...found];
     },
     FIND_EVENT(state, id) {
       if (id) {
