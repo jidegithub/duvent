@@ -3,7 +3,7 @@
     <div class="card-form">
       <div v-if="isDoneBooking" class="card-form__image-container">
         <flex flexDirection="column" justifyContent="center" class="card-form__image">
-          <h2>You have booked <span>3</span> tickets for</h2>
+          <h2>You have booked <span class="ticket-number">{{tickets}}</span> ticket(s) for</h2>
           <div class="card-input-title">
             <hr/>
             <h1>{{selectedEvent.title}}</h1>
@@ -21,12 +21,8 @@
             </router-link>
           </button>
         </flex>
-        <!-- <div class="card-form__image">
-          <img class="" :src="selectedEvent.imageUrl" :alt="selectedEvent.imageUrl">
-        </div> -->
       </div>
       <validation-observer v-else v-slot="{ handleSubmit, reset }">
-      <flex v-if="isBooked" justifyContent="center"><h1 class="notification">Ticket Booked</h1></flex>
       <form @submit.prevent="handleSubmit(onSubmit)" @reset.prevent="reset" class="card-form__inner">
         <div class="card-input">
           <flex flexDirection="column" justifyContent="center">
@@ -78,19 +74,17 @@
           </div>
         </div> -->
         <div class="card-input">
-          <label v-if="!seatsAvailable" for="attendee" class="card-input__label">Name of Attendee(s)</label>
-          <validation-provider v-for="(attendee, index) in attendees" :key="`attendee-${index}`" name="attendee" v-slot='{ errors }' :rules="!seatsAvailable ? null : 'required'">
-            {{index + 1}}<input type="text" name="attendee" :disabled="!seatsAvailable" id="attendee" v-model="attendee.name" class="card-input__input" data-ref="cardName" autocomplete="off">
-            <span>{{ errors[0] }}</span>
-          <!-- <validation-provider name="attendee" v-slot='{ errors }'  :rules="!seatsAvailable ? null : 'required'">
-            <label for="attendee" class="card-input__label">Name of Attendee(s)</label>
-            <input type="text" name="attendee" :disabled="!seatsAvailable" id="attendee" v-model="attendees" class="card-input__input" data-ref="cardName" autocomplete="off">
-            <span>{{ errors[0] }}</span>
-          </validation-provider> -->
+          <label v-if="!seatsAvailable" for="attendee" class="card-input__label">Attendee(s)</label>
+          <validation-provider class="input-wrapper" v-for="(attendee, index) in attendees" :key="`attendee-${index}`" name="attendee" v-slot='{ errors }' :rules="!seatsAvailable ? null : 'required'">
+            <h2>{{index + 1}}</h2>
+            <flex>
+              <input type="text" name="attendee" id="attendee" v-model="attendee.name" class="card-input__input" data-ref="cardName" autocomplete="off">
+              <span>{{ errors[0] }}</span>
+            </flex>
           </validation-provider>
         </div>
         <flex justifyContent="flex-end">
-          <button :disabled="!seatsAvailable" @click="addField(name, attendees)" class="card-input-attendee-button" :class="{ 'opacity': !seatsAvailable}">
+          <button @click="addField(name, attendees)" class="card-input-attendee-button">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M16.7143 7.07143H10.9286V1.28571C10.9286 0.575759 10.3528 0 9.64286 0H8.35714C7.64719 0 7.07143 0.575759 7.07143 1.28571V7.07143H1.28571C0.575759 7.07143 0 7.64719 0 8.35714V9.64286C0 10.3528 0.575759 10.9286 1.28571 10.9286H7.07143V16.7143C7.07143 17.4242 7.64719 18 8.35714 18H9.64286C10.3528 18 10.9286 17.4242 10.9286 16.7143V10.9286H16.7143C17.4242 10.9286 18 10.3528 18 9.64286V8.35714C18 7.64719 17.4242 7.07143 16.7143 7.07143Z" fill="#FC732F"/>
             </svg>
@@ -149,6 +143,7 @@ export default {
       seats: 0,
       attendees: [{ value: '' }],
       isBooked: false,
+      tickets: 0 || 1,
       isDoneBooking: false,
     };
   },
@@ -172,16 +167,18 @@ export default {
         email: this.email,
         number: this.number,
         seats: this.seats,
-        attendees: this.attendees.map((attd) => console.log(attd.name)),
+        tickets: this.tickets,
+        attendees: this.attendees.map((attd) => attd),
       });
+      this.isDoneBooking = true;
       return new Promise((resolve) => {
-        this.isBooked = true;
         setTimeout(() => {
           resolve(this.$router.push('/'));
-        }, 2000);
+        }, 7000);
       });
     },
     addField(value:string, fieldType) {
+      this.tickets += 1;
       return fieldType.push({ value: '' });
     },
   },
@@ -430,5 +427,13 @@ export default {
 }
 .opacity{
   opacity: 0.65;
+}
+.input-wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.ticket-number{
+  color:#f77d24;
 }
 </style>
