@@ -4,23 +4,9 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from 'vue';
 
-// interface FlexBoxInterface {
-//   justifyContent: string
-//   alignItems: string
-//   flexDirection: string
-//   flexGrow: number
-// }
-
-type FlexBoxType = {
-  '--justify-content': string
-  '--align-items': string
-  '--flex-direction': string
-  '--flex-grow': number
-  '--flex-wrap': string
-}
 export default Vue.extend({
   name: 'Flex',
   props: {
@@ -37,7 +23,7 @@ export default Vue.extend({
     flexWrap: String,
   },
   computed: {
-    cssVars(): FlexBoxType {
+    cssVars() {
       return {
         '--flex-direction': this.flexDirection,
         '--align-items': this.alignItems,

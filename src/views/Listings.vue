@@ -15,7 +15,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from 'vue';
 import Flex from '@/components/design-system/Flex.vue';
 import Card from '@/components/card/Card.vue';

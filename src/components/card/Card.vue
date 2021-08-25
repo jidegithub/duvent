@@ -31,24 +31,20 @@
   </Flex>
 </template>
 
-<script lang="ts">
+<script>
 import Flex from '@/components/design-system/Flex.vue';
 import Button from '@/components/design-system/Button.vue';
 import IconCalendar from '@/components/icons/IconCalendar.vue';
-
-interface EventInterface {
-  id: number
-  title: string
-  date: string
-  imageUrl: string
-  ticketAvailable: number
-}
 
 export default {
   name: 'card',
   props: {
     event: {
-      type: Object as () => EventInterface,
+      id: Number,
+      title: String,
+      date: String,
+      imageUrl: String,
+      ticketAvailable: Number,
     },
   },
   components: {
@@ -57,7 +53,7 @@ export default {
     IconCalendar,
   },
   methods: {
-    ticketFilters(value:number, type:string):string {
+    ticketFilters(value, type) {
       let property = '';
       switch (type) {
         case 'button':

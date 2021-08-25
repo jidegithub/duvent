@@ -105,7 +105,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import { localize } from 'vee-validate';
 import Flex from '@/components/design-system/Flex.vue';
 
@@ -177,7 +177,7 @@ export default {
         }, 7000);
       });
     },
-    addField(value:string, fieldType) {
+    addField(value, fieldType) {
       this.tickets += 1;
       return fieldType.push({ value: '' });
     },
