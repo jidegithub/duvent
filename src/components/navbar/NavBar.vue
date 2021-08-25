@@ -41,7 +41,7 @@ export default {
   }
   .nav-header{
     &-outer{
-      background-color: rgba(17, 24, 39, 1);
+      background-color: #5c524d;
       @media only screen and  (min-width: 640px) {
         display: flex;
         justify-content: space-between;

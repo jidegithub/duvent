@@ -34,10 +34,13 @@ export default {
   .searchbar{
     &-outer{
       color: rgb(0, 0, 0);
-      background: #d8dbde;
-      padding: 1.6rem 1.2rem;
+      background: #e5e5e5;
+      padding: 1.6rem 3.8rem;
         @media only screen and (max-width: 48em) {
           justify-content: center;
+        }
+        @media only screen and (max-width: 25.565em) {
+          padding: 1.6rem 0.3rem;
         }
     }
     &-inner{
