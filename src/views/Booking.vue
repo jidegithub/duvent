@@ -1,15 +1,44 @@
 <template>
-    <div class="wrapper">
+  <div class="wrapper">
     <div class="card-form">
-      <div class="card-form__image-container">
-        <div class="card-form__image">
+      <div v-if="isDoneBooking" class="card-form__image-container">
+        <flex flexDirection="column" justifyContent="center" class="card-form__image">
+          <h2>You have booked <span>3</span> tickets for</h2>
+          <div class="card-input-title">
+            <hr/>
+            <h1>{{selectedEvent.title}}</h1>
+            <h4>{{selectedEvent.date}}</h4>
+            <hr/>
+          </div>
+        </flex>
+        <flex justifyContent="space-between" flexWrap="wrap" class="form_buttons">
+          <button type="submit" class="card-form__button card-form__button-primary">
+            Make Payment
+          </button>
+          <button type="reset" class="card-form__button card-form__button-secondary">
+            <router-link to="/">
+              Back To Booking
+            </router-link>
+          </button>
+        </flex>
+        <!-- <div class="card-form__image">
           <img class="" :src="selectedEvent.imageUrl" :alt="selectedEvent.imageUrl">
-        </div>
+        </div> -->
       </div>
-      <validation-observer v-slot="{ handleSubmit, reset }">
+      <validation-observer v-else v-slot="{ handleSubmit, reset }">
       <flex v-if="isBooked" justifyContent="center"><h1 class="notification">Ticket Booked</h1></flex>
       <form @submit.prevent="handleSubmit(onSubmit)" @reset.prevent="reset" class="card-form__inner">
         <div class="card-input">
+          <flex flexDirection="column" justifyContent="center">
+            <div class="card-input-title">
+              <h1>{{selectedEvent.title}}</h1>
+              <h4>{{selectedEvent.date}}</h4>
+              <div class="card-container-details-info--ticket">
+                Tickets Available:
+                <span class="card-container-details-info--ticket-value">{{ selectedEvent.ticketAvailable }}</span>
+              </div>
+            </div>
+          </flex>
           <validation-provider name="name" v-slot='{ errors }' rules="required">
             <label for="name" class="card-input__label">Name</label>
             <input type="text" name="name" id="name" v-model="name" class="card-input__input" data-ref="cardNumber" autocomplete="off">
@@ -25,11 +54,11 @@
         </div>
         <div class="card-input">
           <validation-provider name="Phone Number">
-            <label for="phone-number" class="card-input__label">Phone Number</label>
+            <label for="phone-number" class="card-input__label">Mobile</label>
             <input type="text" id="phone-number" name="phone-number" v-model="number" class="card-input__input" data-ref="cardNumber" autocomplete="off">
           </validation-provider>
         </div>
-        <div class="card-form__row card-input">
+        <!-- <div class="card-form__row card-input">
           <div class="card-form__col">
             <div class="card-form__group">
               <validation-provider name="seats" v-slot='{ errors }' rules="required">
@@ -47,26 +76,34 @@
               </validation-provider>
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="card-input">
-          <validation-provider name="attendee" v-slot='{ errors }'  :rules="!seatsAvailable ? null : 'required'">
+          <label v-if="!seatsAvailable" for="attendee" class="card-input__label">Name of Attendee(s)</label>
+          <validation-provider v-for="(attendee, index) in attendees" :key="`attendee-${index}`" name="attendee" v-slot='{ errors }' :rules="!seatsAvailable ? null : 'required'">
+            {{index + 1}}<input type="text" name="attendee" :disabled="!seatsAvailable" id="attendee" v-model="attendee.name" class="card-input__input" data-ref="cardName" autocomplete="off">
+            <span>{{ errors[0] }}</span>
+          <!-- <validation-provider name="attendee" v-slot='{ errors }'  :rules="!seatsAvailable ? null : 'required'">
             <label for="attendee" class="card-input__label">Name of Attendee(s)</label>
             <input type="text" name="attendee" :disabled="!seatsAvailable" id="attendee" v-model="attendees" class="card-input__input" data-ref="cardName" autocomplete="off">
             <span>{{ errors[0] }}</span>
+          </validation-provider> -->
           </validation-provider>
         </div>
-        <flex justifyContent="space-between" flexWrap="wrap" class="form_buttons">
-          <button type="submit" :disabled="isBooked" class="card-form__button" :class="{ 'submitting': isBooked }">
-            Submit
-          </button>
-          <button type="reset" :disabled="isBooked" class="card-form__button" :class="{ 'submitting': isBooked }">
-            Cancel
+        <flex justifyContent="flex-end">
+          <button :disabled="!seatsAvailable" @click="addField(name, attendees)" class="card-input-attendee-button" :class="{ 'opacity': !seatsAvailable}">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16.7143 7.07143H10.9286V1.28571C10.9286 0.575759 10.3528 0 9.64286 0H8.35714C7.64719 0 7.07143 0.575759 7.07143 1.28571V7.07143H1.28571C0.575759 7.07143 0 7.64719 0 8.35714V9.64286C0 10.3528 0.575759 10.9286 1.28571 10.9286H7.07143V16.7143C7.07143 17.4242 7.64719 18 8.35714 18H9.64286C10.3528 18 10.9286 17.4242 10.9286 16.7143V10.9286H16.7143C17.4242 10.9286 18 10.3528 18 9.64286V8.35714C18 7.64719 17.4242 7.07143 16.7143 7.07143Z" fill="#FC732F"/>
+            </svg>
+              Add an Attendee
           </button>
         </flex>
-        <flex justifyContent="center" class="home-page-link">
-          <router-link to="/">
-            Go Back to Events
-          </router-link>
+        <flex justifyContent="space-between" flexWrap="wrap" class="form_buttons">
+          <button type="submit" :disabled="isBooked" class="card-form__button card-form__button-primary" :class="{ 'submitting': isBooked }">
+            Book Ticket
+          </button>
+          <button type="reset" :disabled="isBooked" class="card-form__button card-form__button-secondary" :class="{ 'submitting': isBooked }">
+            Cancel
+          </button>
         </flex>
       </form>
       </validation-observer>
@@ -110,8 +147,9 @@ export default {
       email: '',
       number: '',
       seats: 0,
-      attendees: '',
+      attendees: [{ value: '' }],
       isBooked: false,
+      isDoneBooking: false,
     };
   },
   computed: {
@@ -134,7 +172,7 @@ export default {
         email: this.email,
         number: this.number,
         seats: this.seats,
-        attendees: this.attendees,
+        attendees: this.attendees.map((attd) => console.log(attd.name)),
       });
       return new Promise((resolve) => {
         this.isBooked = true;
@@ -142,6 +180,9 @@ export default {
           resolve(this.$router.push('/'));
         }, 2000);
       });
+    },
+    addField(value:string, fieldType) {
+      return fieldType.push({ value: '' });
     },
   },
 };
@@ -165,12 +206,10 @@ export default {
   padding: 1.25rem 3rem;
 }
 .card-form {
-  display: flex;
   justify-content: space-around;
   margin: auto;
   width: 100%;
   padding: 15px 15px;
-  box-shadow: 0 30px 60px 0 rgba(90, 116, 148, 0.4);
 
   @media screen and (max-width: 48em) {
     display: block;
@@ -183,9 +222,9 @@ export default {
     border-radius: 10px;
     padding: 35px;
     margin: 0 auto;
-    @media screen and (max-width: 480px) {
+    box-shadow: 0 30px 60px 0 rgba(90, 116, 148, 0.4);
+    @media screen and (max-width: 48em) {
       padding: 25px;
-      padding-top: 165px;
       width: 100%;
     }
     @media screen and (max-width: 360px) {
@@ -238,8 +277,8 @@ export default {
   }
 
   &__button {
-    width: 30%;
-    height: 40px;
+    width: 48.9%;
+    height: 45px;
     border: none;
     border-radius: 5px;
     font-size: 1rem;
@@ -247,23 +286,45 @@ export default {
     box-shadow: 3px 10px 20px 0px rgba(35, 100, 210, 0.3);
     margin-top: 20px;
     cursor: pointer;
+    & a{
+      text-decoration: none;
+      color:inherit
+    }
+    &-primary {
+      color: white;
+      background: #f77d24;
+    }
+    &-secondary {
+      color:#f77d24;
+      border: 1px solid #f77d24;;
+    }
+    @media screen and (max-width: 48em){
+      font-size: 0.8rem;
+    }
     @media screen and (max-width: 480px) {
       margin-top: 10px;
+      font-size: 0.8rem;
+      width: 100%;
     }
   }
   &__image{
-      height: 100%;
-      object-fit: cover;
-      & img{
-        border-radius: 50%;
-      }
+      text-align: center;
       &-container{
       display: flex;
+      width: 60%;
+      margin: 0 auto;
       flex-wrap: wrap;
+      flex-direction: column;
       position: relative;
+      box-shadow: 0 30px 60px 0 rgba(90, 116, 148, 0.4);
+      padding: 3rem 2.5rem;
       @media only screen and (max-width: 48em) {
         width: auto;
+        padding: 2rem;
         justify-content: center;
+      }
+      @media only screen and (max-width: 25.565em){
+        padding: 1rem;
       }
     }
   }
@@ -297,6 +358,9 @@ export default {
 }
 .card-input {
   margin-bottom: 20px;
+  &-title{
+    text-align: center;
+  }
   &__label {
     font-size: 14px;
     margin-bottom: 5px;
@@ -318,6 +382,7 @@ export default {
     background: none;
     color: #1a3b5d;
     font-family: "Source Sans Pro", sans-serif;
+    margin-bottom: 1rem;
 
     &:hover,
     &:focus {
@@ -334,6 +399,15 @@ export default {
       background-position: 90% center;
       background-repeat: no-repeat;
       padding-right: 30px;
+    }
+  }
+  &-attendee-button{
+    border: none;
+    display: flex;
+    align-items: center;
+    background: transparent;
+    & svg {
+      margin-right:.5rem;
     }
   }
 }
@@ -353,5 +427,8 @@ export default {
   cursor: no-drop;
   opacity: 0.65;
   border-color: transparent transparent black black;
+}
+.opacity{
+  opacity: 0.65;
 }
 </style>
