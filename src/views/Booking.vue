@@ -162,14 +162,14 @@ export default {
   },
   methods: {
     onSubmit() {
-      console.table({
-        name: this.name,
-        email: this.email,
-        number: this.number,
-        seats: this.seats,
-        tickets: this.tickets,
-        attendees: this.attendees.map((attd) => attd),
-      });
+      // console.table({
+      //   name: this.name,
+      //   email: this.email,
+      //   number: this.number,
+      //   seats: this.seats,
+      //   tickets: this.tickets,
+      //   attendees: this.attendees.map((attd) => attd),
+      // });
       this.isDoneBooking = true;
       return new Promise((resolve) => {
         setTimeout(() => {
